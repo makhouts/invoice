@@ -3,22 +3,22 @@ import { Header } from './UI/Header/Header';
 import { Backdrop } from './UI/Backdrop/Backdrop';
 
 export const Layout = (props) => {
-    const [showBackdrop, setShowBackdrop] = useState(true);
-    const [showMenu, setShowMenu] = useState(false);
+    const [showBackdrop, setShowBackdrop] = useState(false);
+    const [showMenu, setShowMenu] = useState(true);
 
     const BackdropClicked = () => {
-        return setShowBackdrop(false);
+            setShowBackdrop(false);
+            setShowMenu(false);
     } 
 
-    const openMenu = () => {
-        setShowMenu(true);
-        setShowBackdrop(true);
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+        setShowBackdrop(!showBackdrop);
     }
 
     return (
         <>
-            <Header showMenu={showMenu} clicked={openMenu} />
-            <p style={{margin: '200px'}}>sofkofk</p>
+            <Header showMenu={showMenu} showBackdrop={showBackdrop} clicked={toggleMenu} />
             <Backdrop show={showBackdrop} clicked={BackdropClicked} />
         </>
     );

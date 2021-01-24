@@ -1,0 +1,35 @@
+.button {
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    background-color: var(--green);
+    font-family: Roboto;
+    height: 40px;
+    width: 110px;
+    border: none;
+    transition: 0.4s;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: var(--hovergreen);
+    transition: 0.4s;
+}
+
+.cancel {
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    background-color: var(--red);
+    font-family: Roboto;
+    min-height: 40px;
+    min-width: 110px;
+    border: none;
+    transition: 0.4s;
+}
+
+.cancel:hover {
+    background-color: var(--hoverred);
+    transition: 0.4s;
+}
+

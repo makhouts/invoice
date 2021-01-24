@@ -4,4 +4,27 @@
   margin: 0px;
   padding: 0px;
   font-family: 'Roboto', sans-serif;
+  box-sizing:border-box;
+}
+
+:root {
+  --blue: #4964ff;
+  --red: rgb(235, 43, 43);
+  --green: #27c23ae0;
+  --hoverblue: rgb(24, 54, 189);
+  --hoverred: rgb(190, 0, 0);
+  --hovergreen: rgb(3 146 14 / 1);
+}
+
+input {
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:250px;
+  border:none;
+  border-bottom:1px solid #757575;
+  transition: 0.5s;
+}
+input:focus {
+   outline:none;  
 }

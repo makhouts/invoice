@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classes from './Header.module.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FiAlignLeft } from "react-icons/fi";
  
 export const Header = (props) => {
-
     return(
 <>
         <div className={classes.navicon} onClick={props.clicked}>
@@ -13,10 +12,11 @@ export const Header = (props) => {
         
         <header className={props.showMenu ? classes.sideNav : classes.hideNav} >
             <ul>
-                <Link to='/'><li>Home</li></Link>
-                <Link to='/'><li>Invoice</li></Link>
-                <Link to='/'><li>Invoices</li></Link>
-                <Link to='/'><li>Trash</li></Link>
+                <NavLink to='/'><img src="../../../assets/logo.png" alt=""/><li>Home</li></NavLink>
+                <NavLink to='/clients'><li>Clients</li></NavLink>
+                <NavLink to='/invoices'><li>Invoices</li></NavLink>
+                <NavLink to='/settings'><li>Settings</li></NavLink>
+                
             </ul>
         </header>
 </>

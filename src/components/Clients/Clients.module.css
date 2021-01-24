@@ -1,0 +1,16 @@
+.addClient {
+    display: inline-flex;
+    margin-top: 70px;
+}
+
+.bgClients {
+    margin-top: -100px;
+    width: 100%;
+    display: flex;
+    border-radius: 2px;
+}
+
+.lineBottom {
+    border-bottom: 1px solid #cdd4d9;
+    margin-top: 50px;
+}

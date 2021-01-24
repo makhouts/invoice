@@ -1,0 +1,29 @@
+.notificationBox  {
+    height: 120px;
+    background-color: var(--blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-radius: 2px;
+    position: absolute;
+    left: 108.3em;
+    transition: ease-in;
+    margin-top: 50px;
+}
+
+.notificationBox p {
+    margin: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1.3px;
+    line-height: 30px;
+}
+
+.checkIcon {
+    color: rgb(35, 235, 52);
+    margin-right: 12px;
+    position: relative;
+    top: 5px;
+    font-size: 26px;
+}

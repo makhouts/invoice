@@ -1,0 +1,74 @@
+.formContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    margin-top: 30px;
+}
+
+.formContent input {
+    margin: 10px;
+}
+
+.formContent span {
+    position: relative;
+    left: -30px;
+}
+
+.centerBtn {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.group { 
+  position:relative; 
+  margin-bottom:39px;
+}
+
+label {
+    color:#999; 
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:13px;
+    top:20px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  /* active state */
+  input:focus ~ label, input:valid ~ label 	{
+    top:-15px;
+    left: 13px !important;
+    font-size:14px;
+    color: var(--blue);
+}
+
+.fillFormIcon {
+    color: green;
+    position: absolute;
+    top:-42px;
+    left: 265px !important;
+    cursor: pointer;
+}
+
+.invalidVat {
+    color: red;
+    position: absolute;
+    left: 15px;
+    top: 55px !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.createClientTitle {
+    text-align: center;
+    font-size: 23px;
+    color: var(--blue);
+}
