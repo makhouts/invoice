@@ -1,15 +1,15 @@
 .notificationBox  {
     height: 120px;
     background-color: var(--blue);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     color: white;
     border-radius: 2px;
     position: absolute;
     left: 108.3em;
     transition: ease-in;
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .notificationBox p {
@@ -26,4 +26,15 @@
     position: relative;
     top: 5px;
     font-size: 26px;
+}
+
+.timeBar {
+    height: 10px;
+    width: 0px;
+    background-color: rgba(255, 255, 255, 0.63);
+    transition-duration: 3s;
+}
+
+.timeBarWidth {
+    width: 400px;
 }

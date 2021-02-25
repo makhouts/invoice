@@ -129,16 +129,18 @@ export const Clients = () => {
             </motion.div>
             <div className={classes.lineBottom}></div>
             <span>{filteredClients.length} clients found</span>
-
             <div className={classes.bgClients}>
                 <Client 
-                filterClients = {filteredClients}
-                removeClient={removeClientHandler} 
-                sendEditClient={editClientHandler}
-                client={clients} />
+                    filterClients = {filteredClients}
+                    removeClient={removeClientHandler} 
+                    sendEditClient={editClientHandler}
+                    client={clients} 
+                />
             </div>
-            <Button clicked={loadDummyClients}>Load</Button>
+            <h2 className={classes.centerNoClient}>{clients.length === 0 ? 'No clients' : null}</h2>
 
+            <Button clicked={loadDummyClients}>Load</Button>
+                    
             {spinner && <BigSpinner />} 
             <Modal modalClosed={modalClosed} show={showModal}>
                 <AddClient addClient={addClientHandler} cancelAddingClient={modalClosed} />

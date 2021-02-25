@@ -21,7 +21,9 @@ export const Notification = (props) => {
             onClick={() => setShowNotification(false)}
             className={classes.notificationBox}>
                 <p><AiFillCheckCircle className={classes.checkIcon} />{props.children}</p>
+                <div className={[classes.timeBar, classes.timeBarWidth].join(' ')}></div>
             </motion.div>
+
         </AnimatePresence>
     </>
     ) : null;

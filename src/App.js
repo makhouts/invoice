@@ -12,11 +12,11 @@ function App() {
     <>
     <Router>
       <Layout/>
-      <Switch>
-        <Route path='/clients' component={Clients}></Route>
-        <Route path='/invoices' component={Invoices}></Route>
-        <Route path='/settings' component={Settings}></Route>
-      </Switch>
+        <Switch>
+          <Route path='/clients' component={Clients}></Route>
+          <Route path='/invoices' component={Invoices}></Route>
+          <Route path='/settings' component={Settings}></Route>
+        </Switch>
     </Router>
     </>
   );

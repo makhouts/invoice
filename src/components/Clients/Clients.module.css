@@ -14,3 +14,9 @@
     border-bottom: 1px solid #cdd4d9;
     margin-top: 50px;
 }
+
+.centerNoClient {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
