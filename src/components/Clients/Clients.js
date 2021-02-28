@@ -7,52 +7,31 @@ import { BigSpinner } from '../UI/Spinner/BigSpinner';
 import { Notification } from '../UI/Notification/Notification';
 import classes from './Clients.module.css';
 import axios from 'axios';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import dummyClients from '../../DummyClients';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 
-export const Clients = () => {
-    const [clients, setClients] = useState([]);
-    const [spinner, setSpinner] = useState(false); 
+
+export const Clients = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [textNotification, setTextNotification] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredClients, setFilteredClients] = useState([]);
-    
-
-
-    useEffect(() => {
-        setSpinner(true);
-        axios.get('https://invoice-app-b1329-default-rtdb.firebaseio.com/myclients.json')
-        .then(responseData => {
-            const fetchedData = []
-            for (let key in responseData.data) {
-                fetchedData.push({
-                    ...responseData.data[key], id: key
-                })
-            }
-            setClients(fetchedData)
-            setSpinner(false);
-        })
-        .catch(() => {
-            alert('Something went wrong!')
-            setSpinner(false);
-        })
-    }, []);
 
     useEffect(() => {
         setFilteredClients(
-            clients.filter(client => {
+            props.clients.filter(client => {
                 return client.companyName.toLowerCase().includes( searchTerm.toLowerCase() )
             })
         )
-    }, [searchTerm, clients])
+    }, [searchTerm, props.clients])
 
     const addClientHandler = (client) => {
         axios.post('https://invoice-app-b1329-default-rtdb.firebaseio.com/myclients.json', client)
         .then(res =>
-            setClients(prevClients => [
+            props.setClients(prevClients => [
                 ...prevClients, 
                 {id: res.data.name, ...client }
             ])
@@ -65,13 +44,13 @@ export const Clients = () => {
     };
 
     const removeClientHandler = (clientId, event) => {
-        setSpinner(true)
+        props.setSpinner(true)
         axios.delete(`https://invoice-app-b1329-default-rtdb.firebaseio.com/myclients/${clientId}.json`)
         .then(() => {
-            setClients(prevClients => 
+            props.setClients(prevClients => 
                 prevClients.filter(client => client.id !== clientId)
             )
-            setSpinner(false)
+            props.setSpinner(false)
         })
         .then(() => setShowNotification(true), setTextNotification('Client removed!'));
         setShowNotification(false);
@@ -106,7 +85,7 @@ export const Clients = () => {
     }
 
     const loadDummyClients = () => {
-        return setClients(dummyClients)
+        return props.setClients(dummyClients)
     }
 
 
@@ -120,7 +99,7 @@ export const Clients = () => {
                 stiffness: 360,
                 damping: 15}} 
                 className={classes.addClient}>
-                    <Button clicked={openAddClient}>Add Client</Button>
+                    <Button clicked={openAddClient}><AiOutlineUserAdd />Add Client</Button>
                     <input 
                     type='text' 
                     placeholder='Search client' 
@@ -134,14 +113,14 @@ export const Clients = () => {
                     filterClients = {filteredClients}
                     removeClient={removeClientHandler} 
                     sendEditClient={editClientHandler}
-                    client={clients} 
+                    client={props.clients} 
                 />
             </div>
-            <h2 className={classes.centerNoClient}>{clients.length === 0 ? 'No clients' : null}</h2>
+            <h2 className={classes.centerNoClient}>{props.clients.length === 0 ? 'No clients' : null}</h2>
 
             <Button clicked={loadDummyClients}>Load</Button>
                     
-            {spinner && <BigSpinner />} 
+            {props.spinner && <BigSpinner />}
             <Modal modalClosed={modalClosed} show={showModal}>
                 <AddClient addClient={addClientHandler} cancelAddingClient={modalClosed} />
             </Modal>
