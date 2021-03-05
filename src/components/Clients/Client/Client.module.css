@@ -1,8 +1,8 @@
 .cards {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 200px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    margin-top: 100px;
 }
 
 .card {

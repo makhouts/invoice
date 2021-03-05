@@ -28,3 +28,7 @@ input {
 input:focus {
    outline:none;  
 }
+
+.react-datepicker__header:not(.react-datepicker__header--has-time-select) {
+  background-color: var(--blue);
+}

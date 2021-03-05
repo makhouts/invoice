@@ -1,0 +1,152 @@
+.splitColumn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftColumn {
+    background: rgb(231, 231, 231);
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.rightColumn {
+    background-color: lightgray;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+}
+
+.invoice {
+    box-shadow: 2px 0 rgb(6 41 66 / 10%);
+    border-radius: 10px;
+    width: 595px;
+    height: 842px;
+    margin: 50px;
+    background: rgb(255, 255, 255);
+}
+
+.myInfo {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.myInfo img {
+    width: 120px;
+}
+
+th {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.clientInfo {
+    margin: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.invoiceDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.input {
+    width: 90px;
+    font-size: 15px;
+    height: 20px;
+    padding: 5px;
+    margin-top: 3px;
+    text-align: center;
+}
+
+.bg {
+    background-color: white;
+    border-radius: 5px;
+    padding: 50px;
+}
+
+.bg select {
+    height: 30px;
+    font-size: 14px;
+}
+
+.bg option {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.bg option:hover {
+    background:lightgray !important;
+}
+
+.title {
+    margin-right: 68px;
+}
+
+.flexSelectClient {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.flexSelectClient p {
+    margin-right: 20px;
+}
+
+.productTitles {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+button {
+    color: white;
+    font-size: 21px;
+    background-color: var(--green);
+    font-family: Roboto;
+    height: 24px;
+    width: 33px;
+    border: none;
+    transition: 0.4s;
+    outline: none;
+}
+
+button:hover {
+    background-color: var(--hovergreen);
+    transition: 0.4s;
+}
+
+.productData {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    justify-items:center;
+}
+
+.productData input {
+    border: 1px solid rgb(211, 211, 211);
+    height: 40px;
+    text-align: center;
+}
+
+.wideInput {
+    width: 250px;
+}
+
+.binIcon {
+    margin-top: 5px;
+    font-size: 36px;
+    color: var(--red);
+}
+
+.binIcon:hover {
+    color: black;
+    transition: 0.8s;
+}

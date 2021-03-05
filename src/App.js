@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Clients } from './components/Clients/Clients';
 import { Invoices } from './components/Invoices/Invoices';
 import { Settings } from './components/Settings/Settings';
+import { CreateInvoice } from './components/CreateInvoice/CreateInvoice';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Switch>
           <Route path='/clients' render={() => <Clients clients={clients} setClients={setClients} spinner={spinner} setSpinner={setSpinner} />}></Route>
           <Route path='/invoices' render={() => <Invoices clients={clients} />}></Route>
+          <Route path='/createInvoice' render={() => <CreateInvoice clients={clients} />}></Route>
           <Route path='/settings' component={Settings}></Route>
         </Switch>
     </Router>
