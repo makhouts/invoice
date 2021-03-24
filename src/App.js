@@ -39,9 +39,9 @@ function App() {
     <Router>
       <Layout/>
         <Switch>
-          <Route path='/clients' render={() => <Clients clients={clients} setClients={setClients} spinner={spinner} setSpinner={setSpinner} />}></Route>
+          <Route path='/clients/:showForm?' render={() => <Clients clients={clients} setClients={setClients} spinner={spinner} setSpinner={setSpinner} />}></Route>
           <Route path='/invoices' render={() => <Invoices clients={clients} />}></Route>
-          <Route path='/createInvoice' render={() => <CreateInvoice clients={clients} />}></Route>
+          <Route path='/createInvoice/:id?' render={() => <CreateInvoice clients={clients} />}></Route>
           <Route path='/settings' component={Settings}></Route>
         </Switch>
     </Router>

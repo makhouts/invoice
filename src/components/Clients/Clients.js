@@ -10,23 +10,26 @@ import axios from 'axios';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import dummyClients from '../../DummyClients';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router';
 
 
 
 export const Clients = (props) => {
-    const [showModal, setShowModal] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [textNotification, setTextNotification] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredClients, setFilteredClients] = useState([]);
-
+    const addClient = useParams();
+    const [showModal, setShowModal] = useState(addClient.showForm == 'showForm' ? true : false);
+    
     useEffect(() => {
         setFilteredClients(
             props.clients.filter(client => {
                 return client.companyName.toLowerCase().includes( searchTerm.toLowerCase() )
             })
         )
-    }, [searchTerm, props.clients])
+    }, [searchTerm, props.clients]);
+
 
     const addClientHandler = (client) => {
         axios.post('https://invoice-app-b1329-default-rtdb.firebaseio.com/myclients.json', client)

@@ -38,7 +38,22 @@
     align-items: center;
 }
 
-.deleteIcon:hover {
+.deleteIcon {
     color: var(--red);
-    transition: 0.4s;
+}
+
+.deleteIcon:hover {
+    color: var(--hoverred);
+    transition: 0.2s;
+}
+
+.createInvoice {
+    color: var(--green);
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.createInvoice:hover {
+    color: var(--hovergreen);
+    transition: 0.2s;
 }

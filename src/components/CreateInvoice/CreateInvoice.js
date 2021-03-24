@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import classes from './CreateInvoice.module.css';
-import logo from '../../assets/logo.png';
 import DatePicker from "react-datepicker";
 import { motion } from 'framer-motion';
 import { VscTrash } from "react-icons/vsc";
-import { Link } from 'react-router-dom';
-import { MdPerson } from "react-icons/md";
+import { Link, useParams } from 'react-router-dom';
+import { FaUserPlus } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button } from '../UI/Button/Button';
+import { Invoice } from '../Invoice/Invoice';
+import { MdLibraryAdd } from "react-icons/md";
 
 export const CreateInvoice = (props) => {
     const [clientOption, setClientOption] = useState('');
@@ -18,21 +18,37 @@ export const CreateInvoice = (props) => {
         description: '',
         qty: '',
         unitPrice: '',
+        total: '',
         },
     ]);
+    const inputRef = useRef();
+    const [totalPriceSum, setTotalPriceSum] = useState(0);
+    const [discount, setDiscount] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const idParam = useParams();
+
+    
 
     let selectedClient = (props.clients.filter(client => client.companyName === clientOption));
+    let clientViaParams = props.clients.filter(client => client.id == idParam.id);
+    console.log(clientViaParams)
 
     const handleChangeInput = (index, event) => {
         const values = [...inputs];
         values[index][event.target.name] = event.target.value;
-        setInputs(values);
-    }
+        values[index].total = (values[index].qty * values[index].unitPrice) || 0;
 
+        setInputs(values);
+
+        setTotalPriceSum(inputs.reduce((accumulator, input) => {
+            return accumulator + input.total;
+        }, 0))
+
+    }
+    
     const addInputs = () => {
-        setInputs([...inputs, { description: '', qty: null, unitPrice: '' }])
+        setInputs([...inputs, { description: '', qty: '', unitPrice: '', total: '' }])
     }
 
     const removeInputHandler = (index) => {
@@ -43,7 +59,7 @@ export const CreateInvoice = (props) => {
  
     return (
     <>
-    <div className={`startContent ${classes.splitColumn}`}>
+    <div className={`${classes.splitColumn}`}>
         <div className={classes.leftColumn}>
             <div className={classes.bg}>
                 <div className={classes.flexSelectClient}>
@@ -51,11 +67,10 @@ export const CreateInvoice = (props) => {
                     <select value={clientOption} onChange={(e) => setClientOption(e.target.value)} name="client">
                         <option value=''>Select</option>
                         {props.clients.map(client => 
-                        <>
                             <option key={client.id} value={client.companyName}>{client.companyName.toUpperCase()}</option>
-                        </>
                         )}
                     </select> 
+                    <Link to='/clients/showForm'><button className={classes.addClientBtn}><FaUserPlus /></button></Link>
                 </div>
                 <div className={classes.invoiceDetails}>
                         <h4>Invoicenumber</h4>
@@ -67,12 +82,14 @@ export const CreateInvoice = (props) => {
                         <input 
                             className={classes.input} 
                             type='text' 
+                            ref={inputRef}
                             value={invoiceNumber}
                             onChange={(event) => setInvoiceNumber(event.target.value)}
                             maxLength='10' />
                         <input 
                             className={classes.input} 
                             type='text' 
+                            ref={inputRef}
                             value={reference}
                             placeholder='reference'
                             onChange={(event) => setReference(event.target.value) }
@@ -92,8 +109,9 @@ export const CreateInvoice = (props) => {
 
         {inputs.map((inputValue, index) => (
             <motion.div   
-            animate={{ x: 0, opacity: 1 }}
-            initial={ {x: -100, opacity: 0, } } 
+            animate={{ x: 0, opacity: 1, y: 0 }}
+            initial={ {x: -100, opacity: 0, y: 50 } } 
+            exit={{ x: 50, opacity: 0 }}
             layout
             transition={{ duration: 0.2 }}
             key={index} 
@@ -101,6 +119,7 @@ export const CreateInvoice = (props) => {
                 <input className={`${classes.input} ${classes.wideInput}`}
                     type="text" 
                     name='description'
+                    ref={inputRef}
                     value={inputValue.description} 
                     onChange={(event) => handleChangeInput(index, event)}
                     placeholder='Description'
@@ -109,6 +128,7 @@ export const CreateInvoice = (props) => {
                 <input className={classes.input} 
                     type="number" 
                     name='qty'
+                    ref={inputRef}
                     value={inputValue.qty} 
                     onChange={(event) => handleChangeInput(index, event)}
                     placeholder='QTY'
@@ -117,6 +137,7 @@ export const CreateInvoice = (props) => {
                 <input className={classes.input} 
                     type="number" 
                     name='unitPrice'
+                    ref={inputRef}
                     value={inputValue.unitPrice} 
                     onChange={(event) => handleChangeInput(index, event)}
                     placeholder='Unit price'
@@ -124,89 +145,43 @@ export const CreateInvoice = (props) => {
                     
                 <input className={classes.input} 
                     type="text" 
-                    value={'€ ' + inputValue.qty * inputValue.unitPrice} 
-                    disable='true'/>  
+                    value={(Math.round(inputValue.total * 100) / 100).toFixed(2)} 
+                    disabled={true}/>  
                 <motion.div 
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
-                >
-                 <VscTrash className={classes.binIcon} onClick={() => removeInputHandler(index)}/>
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
+                    >
+                    <VscTrash className={classes.binIcon} onClick={() => removeInputHandler(index)}/>
                 </motion.div>
 
             </motion.div> 
         ))}
-                <button onClick={addInputs}>+</button>
+            <motion.div
+                initial={{x: -60, opactiy: 0}}
+                animate={{x: 0, opacity: 1}}>
+                    <MdLibraryAdd className={classes.addItem} onClick={addInputs} />
+            </motion.div>
+
             </div>
             <div className={classes.bg}>
-
+            <div className={classes.invoiceTotalCalc}>
+                    <h4>Discount:</h4>
+                    <input type="text" value={discount} onChange={event => setDiscount(event.target.value)}/>
+                </div> 
             </div>      
         </div>
         <div className={classes.rightColumn}>
-            <div className={classes.invoice}>
-                <div className={classes.myInfo}>
-                    <img src={logo} alt=""/>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>MILLQUATTRO</th>
-                            </tr>
-                            <tr>
-                                <th>Pierenbergstraat 51</th>
-                            </tr>
-                            <tr>
-                                <th>IBAN: BE65 3770 7844 0196</th>
-                            </tr>
-                            <tr>
-                                <th>VAT: BE1234567890</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
-                <div className={classes.clientInfo}>
-                    <h2 className={classes.title}>INVOICE</h2>
-                   <table>
-                       <thead>
-                        {selectedClient.map(client => (
-                        <div key={client.id}>
-                            <tr>
-                                <th>{client.companyName}</th>
-                            </tr>
-                             <tr>
-                                <th>{client.street} {client.number} </th>
-                            </tr>
-                            <tr>
-                                <th>{client.zipcode} {client.city} </th>
-                            </tr>
-                            <tr>
-                                <th>{client.email}</th>
-                            </tr>
-                            <tr>
-                                <th>{client.phone}</th>
-                            </tr>
-                            <tr>
-                                <th>VAT: {client.vat}</th>
-                            </tr>
-                        </div>
-                         ) )}
-                    </thead>
-                   </table>
-                </div>
-
-                <div className={classes.invoiceDetails}>
-                    <h4>Invoicenumber</h4>
-                    <h4>Reference</h4>
-                    <h4>Invoice Date</h4>
-                    <h4>Expiration Date</h4>
-                </div>
-                <div className={classes.invoiceDetails}>
-                    <p>{invoiceNumber}</p>
-                    <p>{reference}</p>
-                    <p>{startDate.getDate()}/{startDate.getMonth() + 1}/{startDate.getFullYear()}</p>
-                    <p>{endDate.getDate()}/{endDate.getMonth() + 1}/{endDate.getFullYear()}</p>
-                </div>
-
-            </div>
+            <Invoice
+             selectedClient={selectedClient}
+             invoiceNumber={invoiceNumber}
+             reference={reference}
+             startDate={startDate}
+             endDate={endDate}
+             inputs={inputs}
+             refi={inputRef}
+             totalPriceSum={totalPriceSum}
+             discount={discount}
+              />
         </div>
     </div>  
     </>         

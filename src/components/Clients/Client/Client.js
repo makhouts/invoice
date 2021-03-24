@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { Modal } from '../../UI/Modal/Modal';
 import { MdDelete } from "react-icons/md";
 import classes from './Client.module.css';
+import { Link } from 'react-router-dom';
 import { EditClient } from '../../EditClient/EditClient';
 import { AnimatePresence, motion } from 'framer-motion';
+import { AiFillFileAdd } from "react-icons/ai";
+
 
 export const Client = (props) => {
     const [selectedClientId, setSelectedClientId] = useState();
     const [showModal, setShowModal] = useState(false);
-
 
     const clickAlterClient = (id) => {
         setSelectedClientId(id);
@@ -38,6 +40,7 @@ export const Client = (props) => {
                             <span>+{client.phone}</span>
                             <span>{client.email}</span>
                             <div className={classes.cardIcons}>
+                                <Link to={`createInvoice/${client.id}`}><AiFillFileAdd onClick={event => event.stopPropagation()}  size='1.7em' className={classes.createInvoice} /></Link>
                                 <MdDelete className={classes.deleteIcon} onClick={props.removeClient.bind(this, client.id)} size='1.8em' />
                             </div>
                         </motion.div>          
