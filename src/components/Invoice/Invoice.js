@@ -1,18 +1,21 @@
-import React, {useState} from 'react'
+import React from 'react'
 import logo from '../../assets/logo.png';
 import classes from '../CreateInvoice/CreateInvoice.module.css';
 import { motion } from 'framer-motion';
 
+
+
 export const Invoice = (props) => {
 
-    console.log()
 
 return (
+<>
     <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate= {{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className={classes.invoice}>
+            className={classes.invoice}
+            ref ={props.ref}>
                 <div className={classes.myInfo}>
                     <img src={logo} alt=""/>
                     <table>
@@ -95,24 +98,23 @@ return (
                 </div> 
                 <div className={classes.invoiceOverview}>
                     <div className={classes.overviewTitles}>
-                        <p>Subtotal</p>
+                        <p>Total excl. VAT</p>
                         <p>VAT 21%</p>
-                        <p>Discount</p>
-                        <p>Total</p>
+                        {props.discount !== '' ? <p>Discount</p> : null }
+                        <h4><strong>Total incl. VAT</strong></h4>
                     </div>
 
-                    <div>
-                       
-                    <p>€ {(props.totalPriceSum / 1.21).toFixed(2)}</p>
-                
-
+                <div>     
+                        <p>€ {(props.totalPriceSum / 1.21).toFixed(2)}</p>
                         <p>€ {(props.totalPriceSum - props.totalPriceSum / 1.21).toFixed(2)}</p>
-                        <p>€ {props.discount}</p>
-                        <p>€ {(props.totalPriceSum - props.discount).toFixed(2)}</p>  
-                    </div>
+                        {props.discount !== '' ? <p>€ - {props.discount}</p> : null }
+                        <div className={classes.totalLine}></div>
+                        <h4><strong>€ {(props.totalPriceSum - props.discount).toFixed(2)}</strong></h4>
+                </div>
                 </div> 
                 <div className={classes.invoiceFooter}>
                     <p>U wordt vriendelijk verzocht de factuur voor de vervaldatum te voldoen <br /> van het factuurnummer.</p>        
                 </div>         
-    </motion.div>
+    </motion.div>  
+</>
 )};

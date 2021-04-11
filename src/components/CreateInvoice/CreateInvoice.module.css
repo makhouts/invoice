@@ -214,8 +214,13 @@ h4 {
 .invoiceOverview {
     display: flex;
     justify-content: flex-end;
-    padding-right: 65px;
-    margin-top: 40px;
+    padding-right: 55px;
+    margin-top: 30px;
+}
+
+.invoiceOverview p {
+    padding: 3px;
+    text-align: left;
 }
 
 .overviewTitles {
@@ -232,5 +237,18 @@ h4 {
 
 .invoiceTotalCalc {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
+
+.discountInline {
+    display: flex;
+}
+
+.totalLine {
+    border-bottom: 1px solid black;
+}
+
+.discountInline input {
+    text-align: left;
+}
+

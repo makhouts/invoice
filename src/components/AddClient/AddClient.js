@@ -41,6 +41,7 @@ export const AddClient = (props) => {
             }
         })
         .catch(err => {
+           console.log('dit is de error' + err)
            alert('Gegevens ophalen niet mogelijk voor het moment. Excuses voor het ongemak.');
            setSpinner(false);
         })

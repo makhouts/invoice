@@ -8,7 +8,6 @@ import { Notification } from '../UI/Notification/Notification';
 import classes from './Clients.module.css';
 import axios from 'axios';
 import { AiOutlineUserAdd } from 'react-icons/ai';
-import dummyClients from '../../DummyClients';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router';
 
@@ -20,7 +19,7 @@ export const Clients = (props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredClients, setFilteredClients] = useState([]);
     const addClient = useParams();
-    const [showModal, setShowModal] = useState(addClient.showForm == 'showForm' ? true : false);
+    const [showModal, setShowModal] = useState(addClient.showForm === 'showForm' ? true : false);
     
     useEffect(() => {
         setFilteredClients(
@@ -87,10 +86,6 @@ export const Clients = (props) => {
         notification = <Notification>{textNotification}</Notification>
     }
 
-    const loadDummyClients = () => {
-        return props.setClients(dummyClients)
-    }
-
 
     return (
         <div className='startContent'>
@@ -120,8 +115,6 @@ export const Clients = (props) => {
                 />
             </div>
             <h2 className={classes.centerNoClient}>{props.clients.length === 0 ? 'No clients' : null}</h2>
-
-            <Button clicked={loadDummyClients}>Load</Button>
                     
             {props.spinner && <BigSpinner />}
             <Modal modalClosed={modalClosed} show={showModal}>

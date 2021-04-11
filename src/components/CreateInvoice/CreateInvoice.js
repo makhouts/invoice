@@ -1,17 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import classes from './CreateInvoice.module.css';
 import DatePicker from "react-datepicker";
 import { motion } from 'framer-motion';
 import { VscTrash } from "react-icons/vsc";
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaUserPlus } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import { Invoice } from '../Invoice/Invoice';
 import { MdLibraryAdd } from "react-icons/md";
+import { Button } from '../UI/Button/Button';
+import Pdf from 'react-to-pdf';
+import axios from 'axios';
+
+
+const ref = React.createRef();
 
 export const CreateInvoice = (props) => {
     const [clientOption, setClientOption] = useState('');
-    const [invoiceNumber, setInvoiceNumber] = useState('#');
+    const [invoiceNumber, setInvoiceNumber] = useState('');
     const [reference, setReference] = useState();
     const [inputs, setInputs] = useState([
         {
@@ -23,16 +29,35 @@ export const CreateInvoice = (props) => {
     ]);
     const inputRef = useRef();
     const [totalPriceSum, setTotalPriceSum] = useState(0);
-    const [discount, setDiscount] = useState(null);
+    const [discount, setDiscount] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const idParam = useParams();
+
+    let selectedClient = (props.clients.filter(client => client.companyName === clientOption));
+    const invoiceQuery = {
+        client: selectedClient[0],
+        invoiceNumber,
+        reference,
+        startDate: `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`,
+        endDate,
+        items: inputs,
+        total: totalPriceSum.toFixed(2),
+        discount,
+        status: 'Openstaand'
+    }
+
+    const addInvoice = (toPdf) => {
+        toPdf();
+        axios.post('https://invoice-app-b1329-default-rtdb.firebaseio.com/invoices.json', invoiceQuery)
+        .then(res => 
+            alert('succes!')
+            
+        )
+        .catch(err => alert(err))
+    }
 
     
 
-    let selectedClient = (props.clients.filter(client => client.companyName === clientOption));
-    let clientViaParams = props.clients.filter(client => client.id == idParam.id);
-    console.log(clientViaParams)
 
     const handleChangeInput = (index, event) => {
         const values = [...inputs];
@@ -55,6 +80,7 @@ export const CreateInvoice = (props) => {
         const values = [...inputs];
         values.splice(index, 1);
         setInputs(values);
+        setTotalPriceSum(totalPriceSum + 0)
     }
  
     return (
@@ -84,6 +110,7 @@ export const CreateInvoice = (props) => {
                             type='text' 
                             ref={inputRef}
                             value={invoiceNumber}
+                            placeholder='invoice number'
                             onChange={(event) => setInvoiceNumber(event.target.value)}
                             maxLength='10' />
                         <input 
@@ -151,7 +178,8 @@ export const CreateInvoice = (props) => {
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.8 }}
                     >
-                    <VscTrash className={classes.binIcon} onClick={() => removeInputHandler(index)}/>
+                        {}
+                    <VscTrash className={classes.binIcon} onClick={() => removeInputHandler(index, )}/>
                 </motion.div>
 
             </motion.div> 
@@ -164,13 +192,18 @@ export const CreateInvoice = (props) => {
 
             </div>
             <div className={classes.bg}>
-            <div className={classes.invoiceTotalCalc}>
-                    <h4>Discount:</h4>
-                    <input type="text" value={discount} onChange={event => setDiscount(event.target.value)}/>
-                </div> 
+                <div className={classes.invoiceTotalCalc}>
+                    <div className={classes.discountInline}>
+                        <h4>Discount: €</h4>
+                        <input type="number" className={classes.input} value={discount} onChange={event => setDiscount(event.target.value)}/>
+                    </div>
+                    <Pdf targetRef={ref} filename={`invoice${invoiceNumber}.pdf`}>
+                        {({ toPdf }) =><Button clicked={() => addInvoice(toPdf)}>Save</Button>}
+                    </Pdf>
+                </div>
             </div>      
         </div>
-        <div className={classes.rightColumn}>
+        <div ref={ref} className={classes.rightColumn}>
             <Invoice
              selectedClient={selectedClient}
              invoiceNumber={invoiceNumber}

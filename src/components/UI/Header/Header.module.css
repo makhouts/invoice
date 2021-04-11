@@ -14,9 +14,11 @@
 .sideNav {
     height: 100%;
     width: 100px;
-    background-color: var(--blue);
+    background: rgb(105,127,255);
+    background: linear-gradient(173deg, rgba(105,127,255,1) 0%, rgba(0,32,217,1) 100%, rgba(60,77,255,1) 100%);
     position: fixed;
     transition: 850ms;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23), 0 0 5px #aaa inset;
 }
 
 .sideNav ul {
@@ -57,3 +59,4 @@ a:hover {
 
     
 }
+

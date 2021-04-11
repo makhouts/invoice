@@ -14,9 +14,7 @@ export const Header = (props) => {
             <ul>
                 <NavLink to='/'><img src="../../../assets/logo.png" alt=""/><li>Home</li></NavLink>
                 <NavLink to='/clients'><li>Clients</li></NavLink>
-                <NavLink to='/invoices'><li>Invoices</li></NavLink>
-                <NavLink to='/settings'><li>Settings</li></NavLink>
-                
+                <NavLink to='/invoices'><li>Invoices</li></NavLink>                
             </ul>
         </header>
 </>
