@@ -43,7 +43,7 @@ export const CreateInvoice = (props) => {
         items: inputs,
         total: totalPriceSum.toFixed(2),
         discount,
-        status: 'Openstaand'
+        status: 'Unpaid'
     }
 
     const addInvoice = (toPdf) => {
@@ -211,7 +211,7 @@ export const CreateInvoice = (props) => {
              startDate={startDate}
              endDate={endDate}
              inputs={inputs}
-             refi={inputRef}
+             ref={inputRef}
              totalPriceSum={totalPriceSum}
              discount={discount}
               />

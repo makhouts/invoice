@@ -56,7 +56,7 @@ export const Invoices = (props) => {
     }, [])
 
     const paid = (id) => {
-        const paid =  'Betaald'
+        const paid =  'Paid'
         const config = { headers: {'Content-Type': 'application/json'} };
         axios.put(`https://invoice-app-b1329-default-rtdb.firebaseio.com/invoices/${id}/status.json`, JSON.stringify(paid), config)
         .then(() =>
@@ -107,8 +107,8 @@ export const Invoices = (props) => {
                       <td>{inv.startDate}</td>
                       <td>{inv.client.companyName}</td>
                       <td>€ {inv.total}</td>
-                      {inv.status === 'Openstaand' ? <td className={classes.invoiceOpen}>{inv.status}</td> : <td className={classes.invoicePaid}>{inv.status}</td>}
-                      <td>{inv.status === 'Openstaand' ? <HiCheck onClick={() => paid(inv.id)} className={classes.dots} /> : <HiOutlineX onClick={() => remove(inv.id)} className={classes.x} />}</td>
+                      {inv.status === 'Unpaid' ? <td className={classes.invoiceOpen}>{inv.status}</td> : <td className={classes.invoicePaid}>{inv.status}</td>}
+                      <td>{inv.status === 'Unpaid' ? <HiCheck onClick={() => paid(inv.id)} className={classes.dots} /> : <HiOutlineX onClick={() => remove(inv.id)} className={classes.x} />}</td>
                   </motion.tr> 
         ))}        
       </tbody>
@@ -116,9 +116,13 @@ export const Invoices = (props) => {
     {spinner && <BigSpinner />}
   </motion.div>
 </section>
-
+<div>
+  <Modal modalClosed={() => setShowModal(false)} show={showModal}>
+    <Invoice />
+  </Modal>
 </div>
 
+</div>
 </div>
     
     )
