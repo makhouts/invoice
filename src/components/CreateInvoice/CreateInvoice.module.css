@@ -21,10 +21,11 @@
 
 .invoice {
     box-shadow: 2px 0 rgb(6 41 66 / 10%);
+    border: 3px solid rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     width: 595px;
     height: 842px;
-    margin: 50px;
+    margin: 10px auto;
     background: rgb(255, 255, 255);
 }
 

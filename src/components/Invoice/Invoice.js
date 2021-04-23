@@ -76,8 +76,8 @@ return (
                 <div className={classes.invoiceDetails}>
                     <p>{props.invoiceNumber}</p>
                     <p>{props.reference}</p>
-                    <p>{props.startDate.getDate()}/{props.startDate.getMonth() + 1}/{props.startDate.getFullYear()}</p>
-                    <p>{props.endDate.getDate()}/{props.endDate.getMonth() + 1}/{props.endDate.getFullYear()}</p>
+                    <p>{props.startDate}</p>
+                    <p>{props.endDate}</p>
                 </div>
                 <div className={classes.line}></div>
                 <div className={classes.productTitlesDetails}>

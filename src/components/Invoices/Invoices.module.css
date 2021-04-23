@@ -14,7 +14,7 @@
     margin-top: 50px;
 }
 
-  .table{
+.table{
     width:100%;
     table-layout: fixed;
   }
@@ -87,4 +87,10 @@
     background-color: rgba(240, 240, 240, 0.527);
     transition: 0.5s;
     cursor: pointer;
+  }
+
+  .dwnlBtn {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 62px;
   }

@@ -34,12 +34,15 @@ export const CreateInvoice = (props) => {
     const [endDate, setEndDate] = useState(new Date());
 
     let selectedClient = (props.clients.filter(client => client.companyName === clientOption));
+    console.log(selectedClient)
+    let startingDate = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
+    let endingDate = `${endDate.getDate()}/${endDate.getMonth() + 1}/${endDate.getFullYear()}`;
     const invoiceQuery = {
-        client: selectedClient[0],
+        client: selectedClient,
         invoiceNumber,
         reference,
-        startDate: `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`,
-        endDate,
+        startDate: startingDate,
+        endDate: endingDate,
         items: inputs,
         total: totalPriceSum.toFixed(2),
         discount,
@@ -208,8 +211,8 @@ export const CreateInvoice = (props) => {
              selectedClient={selectedClient}
              invoiceNumber={invoiceNumber}
              reference={reference}
-             startDate={startDate}
-             endDate={endDate}
+             startDate={startingDate}
+             endDate={endingDate}
              inputs={inputs}
              ref={inputRef}
              totalPriceSum={totalPriceSum}

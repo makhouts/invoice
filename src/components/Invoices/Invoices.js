@@ -10,14 +10,18 @@ import { motion } from 'framer-motion';
 import { Modal } from '../UI/Modal/Modal';
 import { Invoice } from '../Invoice/Invoice';
 import { BigSpinner } from '../UI/Spinner/BigSpinner';
+import Pdf from 'react-to-pdf';
+
+
+const ref = React.createRef();
 
 export const Invoices = (props) => {
 
     const [invoices, setInvoices] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [spinner, setSpinner] = useState(false);
+    const [selectedClient, setSelectedClient] = useState([]);
 
-    let selectedClient = [];
 
     const container = {
       hidden: { opacity: 1, scale: 0 },
@@ -101,11 +105,11 @@ export const Invoices = (props) => {
         {invoices.map(inv => (    
                   <motion.tr onClick={() => {
                     setShowModal(true)
-                    selectedClient = inv;
+                    setSelectedClient([inv])
                   }} className={classes.tblhaha} variants={item} key={inv.id}>
                       <td>{inv.invoiceNumber}</td>
                       <td>{inv.startDate}</td>
-                      <td>{inv.client.companyName}</td>
+                      <td>{inv.client[0].companyName}</td>
                       <td>€ {inv.total}</td>
                       {inv.status === 'Unpaid' ? <td className={classes.invoiceOpen}>{inv.status}</td> : <td className={classes.invoicePaid}>{inv.status}</td>}
                       <td>{inv.status === 'Unpaid' ? <HiCheck onClick={() => paid(inv.id)} className={classes.dots} /> : <HiOutlineX onClick={() => remove(inv.id)} className={classes.x} />}</td>
@@ -118,7 +122,27 @@ export const Invoices = (props) => {
 </section>
 <div>
   <Modal modalClosed={() => setShowModal(false)} show={showModal}>
-    <Invoice />
+  <div className={classes.dwnlBtn}>  
+  <Pdf targetRef={ref} filename={`invoice`}>
+    {({ toPdf }) =><Button clicked={() => toPdf()}>Download</Button>}
+  </Pdf>
+  </div>
+    {showModal &&
+    <div ref={ref}>
+      <Invoice 
+          selectedClient={selectedClient[0].client}
+          startDate={selectedClient[0].startDate}
+          endDate={selectedClient[0].endDate}
+          invoiceNumber={selectedClient[0].invoiceNumber}
+          reference={selectedClient[0].reference}
+          vat={selectedClient[0].vat}
+          totalPriceSum={selectedClient[0].total}
+          discount={selectedClient[0].discount}
+          inputs={selectedClient[0].items}
+        />
+      </div>
+    }
+      
   </Modal>
 </div>
 
